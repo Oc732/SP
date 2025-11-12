@@ -21,35 +21,30 @@ public class WorstFit {
         int[] allocation = new int[n];
         Arrays.fill(allocation, -1);
 
+        // Worst Fit logic
         for (int i = 0; i < n; i++) {
             int worstIdx = -1;
-            for (int j = 0; j < m; j++) {
-                if (blockSize[j] >= processSize[i]) {
-                    if (worstIdx == -1 || blockSize[j] > blockSize[worstIdx])
-                        worstIdx = j;
-                }
-            }
+            for (int j = 0; j < m; j++)
+                if (blockSize[j] >= processSize[i] && 
+                   (worstIdx == -1 || blockSize[j] > blockSize[worstIdx]))
+                    worstIdx = j;
             if (worstIdx != -1) {
                 allocation[i] = worstIdx;
                 blockSize[worstIdx] -= processSize[i];
             }
-
-            // Show updated block sizes
-            System.out.println("\nAfter allocating Process " + (i + 1) + " (" + processSize[i] + "):");
-            for (int k = 0; k < m; k++)
-                System.out.println("Block " + (k + 1) + " Remaining Size: " + blockSize[k]);
         }
 
         // Final Allocation Table
         System.out.println("\n--- Worst Fit ---");
         System.out.println("Process No.\tProcess Size\tBlock No.");
-        for (int i = 0; i < n; i++) {
-            System.out.print((i + 1) + "\t\t" + processSize[i] + "\t\t");
-            if (allocation[i] != -1)
-                System.out.println(allocation[i] + 1);
-            else
-                System.out.println("Not Allocated");
-        }
+        for (int i = 0; i < n; i++)
+            System.out.println((i + 1) + "\t\t" + processSize[i] + "\t\t" +
+                    (allocation[i] != -1 ? (allocation[i] + 1) : "Not Allocated"));
+
+        // Final Block Sizes
+        System.out.println("\n--- Final Remaining Block Sizes ---");
+        for (int i = 0; i < m; i++)
+            System.out.println("Block " + (i + 1) + ": " + blockSize[i]);
 
         sc.close();
     }
@@ -63,3 +58,4 @@ Execution command:
 javac WorstFit.java
 
 java WorstFit
+
