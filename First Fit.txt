@@ -9,18 +9,19 @@ public class FirstFit {
         System.out.print("Enter number of memory blocks: ");
         int m = sc.nextInt();
         int[] blockSize = new int[m];
-        System.out.println("Enter sizes of " + m + " blocks:");
-        for (int i = 0; i < m; i++) blockSize[i] = sc.nextInt();
+        System.out.println("Enter size of blocks:");
+        for (int i = 0; i < m; i++);
 
         System.out.print("Enter number of processes: ");
         int n = sc.nextInt();
         int[] processSize = new int[n];
-        System.out.println("Enter sizes of " + n + " processes:");
-        for (int i = 0; i < n; i++) processSize[i] = sc.nextInt();
+        System.out.println("Enter size of processes:");
+        for (int i = 0; i < n; i++);
 
         int[] allocation = new int[n];
         Arrays.fill(allocation, -1);
 
+        // First Fit Logic
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < m; j++) {
                 if (blockSize[j] >= processSize[i]) {
@@ -29,11 +30,6 @@ public class FirstFit {
                     break;
                 }
             }
-
-            // Show updated block sizes
-            System.out.println("\nAfter allocating Process " + (i + 1) + " (" + processSize[i] + "):");
-            for (int k = 0; k < m; k++)
-                System.out.println("Block " + (k + 1) + " Remaining Size: " + blockSize[k]);
         }
 
         // Final Allocation Table
@@ -47,14 +43,18 @@ public class FirstFit {
                 System.out.println("Not Allocated");
         }
 
+        // Final Block Sizes
+        System.out.println("\n--- Final Remaining Block Sizes ---");
+        for (int i = 0; i < m; i++)
+            System.out.println("Block " + (i + 1) + ": " + blockSize[i]);
+
         sc.close();
     }
 }
-
-
 
 
 Execution command:
 javac FirstFit.java
 
 java FirstFit
+
