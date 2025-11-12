@@ -20,35 +20,30 @@ public class BestFit {
         int[] allocation = new int[n];
         Arrays.fill(allocation, -1);
 
+        // Best Fit logic
         for (int i = 0; i < n; i++) {
             int bestIdx = -1;
-            for (int j = 0; j < m; j++) {
-                if (blockSize[j] >= processSize[i]) {
-                    if (bestIdx == -1 || blockSize[j] < blockSize[bestIdx])
-                        bestIdx = j;
-                }
-            }
+            for (int j = 0; j < m; j++)
+                if (blockSize[j] >= processSize[i] && 
+                   (bestIdx == -1 || blockSize[j] < blockSize[bestIdx]))
+                    bestIdx = j;
             if (bestIdx != -1) {
                 allocation[i] = bestIdx;
                 blockSize[bestIdx] -= processSize[i];
             }
-
-            // Show updated block sizes
-            System.out.println("\nAfter allocating Process " + (i + 1) + " (" + processSize[i] + "):");
-            for (int k = 0; k < m; k++)
-                System.out.println("Block " + (k + 1) + " Remaining Size: " + blockSize[k]);
         }
 
         // Final Allocation Table
         System.out.println("\n--- Best Fit ---");
         System.out.println("Process No.\tProcess Size\tBlock No.");
-        for (int i = 0; i < n; i++) {
-            System.out.print((i + 1) + "\t\t" + processSize[i] + "\t\t");
-            if (allocation[i] != -1)
-                System.out.println(allocation[i] + 1);
-            else
-                System.out.println("Not Allocated");
-        }
+        for (int i = 0; i < n; i++)
+            System.out.println((i + 1) + "\t\t" + processSize[i] + "\t\t" +
+                    (allocation[i] != -1 ? (allocation[i] + 1) : "Not Allocated"));
+
+        // Final Block Sizes
+        System.out.println("\n--- Final Remaining Block Sizes ---");
+        for (int i = 0; i < m; i++)
+            System.out.println("Block " + (i + 1) + ": " + blockSize[i]);
 
         sc.close();
     }
@@ -61,3 +56,4 @@ Execution command:
 javac BestFit.java
 
 java BestFit
+
